@@ -1,0 +1,85 @@
+<div class="register-container">
+    <h3>Registro de usuario</h3>
+    <hr>
+    <div class="form-container">
+        <form [formGroup]="form" (ngSubmit)="register()">
+            <div class="form-field">
+                <label>Nombre</label>
+                <input [ngClass]="{'invalid-field': nameInvalid}" type="text" formControlName="name" placeholder="Nombre">
+                <small class="error" *ngIf="nameInvalid">Campo obligatorio</small>
+            </div>
+
+            <div class="form-field">
+                <label>Apellidos</label>
+                <input [ngClass]="{'invalid-field': familyNameInvalid}" type="text" formControlName="familyName" placeholder="Apellidos">
+                <small class="error" *ngIf="familyNameInvalid">Campo obligatorio</small>
+            </div>
+
+            <div class="form-field">
+                <label>Email</label>
+                <div class="field">
+                    <input [ngClass]="{'invalid-field': emailEmpty || emailFormatInvalid || emailNotAvilable, 'verified-field': emailValid}" type="email" formControlName="email" placeholder="Correo electrónico">
+                    <img *ngIf="emailNotAvilable" src="../../../assets/img/error.png" class="icono">
+                    <img *ngIf="emailValid" src="../../../assets/img/verification.png" class="icono">
+                </div>
+                <small class="error" *ngIf="emailEmpty; else invalidFormat">Campo obligatorio</small>
+                <ng-template #invalidFormat>
+                    <small class="error" *ngIf="emailFormatInvalid; else emailNoValid">Correo no válido</small>
+                </ng-template>
+                <ng-template #emailNoValid>
+                    <small class="error" *ngIf="emailNotAvilable; else emailAvilable">Ya existe un usuario con ese correo</small>
+                </ng-template>
+                <ng-template #emailAvilable>
+                    <small class="text-green" *ngIf="emailValid">Correo aceptado</small>
+                </ng-template>
+            </div>
+
+            <div class="form-field">
+                <label>Usuario</label>
+                <div class="field">
+                    <input [ngClass]="{'invalid-field': usernameEmpty || usernameInvalid, 'verified-field': usernameValid}" type="text" formControlName="username" placeholder="Nombre de usuario">
+                    <img *ngIf="usernameInvalid && !usernameEmpty" src="../../../assets/img/error.png" class="icono">
+                    <img *ngIf="usernameValid" src="../../../assets/img/verification.png" class="icono">
+                </div>
+                <small class="error" *ngIf="usernameEmpty; else userNoValid">Campo obligatorio</small>
+                <ng-template #userNoValid>
+                    <small class="error" *ngIf="usernameInvalid; else userAvilable">Nombre de usuario no disponible</small>
+                </ng-template>
+                <ng-template #userAvilable>
+                    <small class="text-green" *ngIf="usernameValid">Usuario disponible</small>
+                </ng-template>
+            </div>
+
+            <div class="form-field">
+                <label>Contraseña</label>
+                <input [ngClass]="{'invalid-field': passwordEmpty || passwordLengthInvalid }" type="password" formControlName="password" placeholder="Contraseña">
+                <small class="error" *ngIf="passwordEmpty; else invalidLength">Campo obligatorio</small>
+                <ng-template #invalidLength>
+                    <small class="error" *ngIf="passwordLengthInvalid">La contraseña debe contener entre 8 y 20 caracteres</small>
+                </ng-template>
+            </div>
+
+            <div class="form-field">
+                <label>Repite Contraseña</label>
+                <input [ngClass]="{'invalid-field': password2Empty || passwordsNotEqual}" type="password" formControlName="password2" placeholder="Repita la contraseña">
+                <small class="error" *ngIf="password2Empty; else notEqual">Campo obligatorio</small>
+                <ng-template #notEqual>
+                    <small class="error" *ngIf="passwordsNotEqual">Las contraseñas no coinciden</small>
+                </ng-template>
+            </div>
+
+            <div class="login">
+                <a [routerLink]="['/login']">¿Ya tienes cuenta?</a>
+            </div>
+
+            <div class="error" *ngIf="registerError">
+                <p>
+                    Error al registrar el usuario
+                </p>
+            </div>
+
+            <button [disabled]="formInvalid" class="button">Registrarse</button>
+
+        </form>
+    </div>
+</div>

@@ -1,0 +1,32 @@
+<div class="login-container">
+    <h3>Login</h3>
+    <hr>
+    <div class="form-container">
+        <form [formGroup]="form" (ngSubmit)="login()">
+            <div class="form-field">
+                <label>Usuario</label>
+                <input [ngClass]="{'invalid-field': usernameInvalid}" type="text" formControlName="username" placeholder="Nombre de usuario">
+                <small class="field-error" *ngIf="usernameInvalid">Campo obligatorio</small>
+            </div>
+
+            <div class="form-field">
+                <label>Contraseña</label>
+                <input [ngClass]="{'invalid-field': passwordInvalid}" type="password" formControlName="password" placeholder="Contraseña">
+                <small class="field-error" *ngIf="passwordInvalid">Campo obligatorio</small>
+            </div>
+
+            <div class="registro">
+                <a [routerLink]="['/register']">¿No tienes cuenta?</a>
+            </div>
+
+            <div class="error" *ngIf="loginError">
+                <p>
+                    El usuario o la contraseña son incorrectas
+                </p>
+            </div>
+
+            <button [disabled]="formInvalid" class="button">Login</button>
+
+        </form>
+    </div>
+</div>
